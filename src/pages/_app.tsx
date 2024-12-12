@@ -6,7 +6,7 @@ import { MswComponent } from '@/components/provider/MswComponent';
 import { TanStackQueryProvider } from '@/components/provider/QueryClient';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const MSWState = process.env.NEXT_PUBLIC_MSW_STATE === 'true';
+  const MSWState = process.env.NEXT_PUBLIC_MSW_STATE === 'false';
   return (
     <TanStackQueryProvider>
       {MSWState ? (
