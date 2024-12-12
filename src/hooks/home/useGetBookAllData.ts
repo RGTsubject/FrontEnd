@@ -1,13 +1,22 @@
 import { BookType } from '@/types/home';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { SetStateAction } from 'react';
 
-const useGetBookAllData = () => {
+interface useGetBookAllDataType {
+  setAllBookInfo: React.Dispatch<SetStateAction<BookType[]>>;
+}
+
+const useGetBookAllData = ({ setAllBookInfo }: useGetBookAllDataType) => {
   return useQuery<BookType[]>({
     queryKey: ['getAllBook'],
     queryFn: async () => {
       const response = await axios.get('/book');
-      console.log('모든 데이터 가져오기: ', response);
+      // console.log('모든 데이터 가져오기: ', response);
+
+      if (response.status === 200) {
+        setAllBookInfo(response.data);
+      }
 
       return response.data;
     },

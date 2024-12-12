@@ -6,15 +6,28 @@ export const handlers = [
     return HttpResponse.json(bookData);
   }),
 
-  // 특정 ID의 책 데이터를 반환
   http.get('/book/:id', ({ params }) => {
-    const bookId = params.id as string; // URL Params에서 ID 가져오기
-    const book = bookData.find((b) => b.id === parseInt(bookId)); // ID를 갖는 책 찾기
+    const bookId = params.id as string;
+    const book = bookData.find((b) => b.id === parseInt(bookId));
 
     if (book) {
       return HttpResponse.json(book);
     } else {
-      return HttpResponse.json(404); // 책이 없을 경우 404 응답
+      return HttpResponse.json('Not Found Data', { status: 404 });
+    }
+  }),
+
+  http.delete('/book/:id', ({ params }) => {
+    const bookId = params.id as string;
+    const book = bookData.filter((b) => b.id === parseInt(bookId));
+
+    if (book) {
+      return HttpResponse.json(book);
+    } else {
+      return HttpResponse.json(
+        { error: 'Not Allowed Delete' },
+        { status: 404 }
+      );
     }
   }),
 ];

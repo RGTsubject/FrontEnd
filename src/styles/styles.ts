@@ -48,13 +48,26 @@ export const HomeContainer = styled.div`
     }
 
     .bookShow {
-      width: 150px;
+      width: 180px;
       display: flex;
       flex-direction: column;
       margin: 0.8rem;
       cursor: pointer;
+      padding: 0.5rem;
+
+      &:hover {
+        transition: 0.3s transform;
+        transform: translateY(-10px);
+        box-shadow: 0px 1px 3px 1px gray;
+        border-radius: 0.3rem;
+      }
     }
 
+    .bookCoverRow {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
     .bookCover {
       object-fit: contain;
     }
