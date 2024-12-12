@@ -1,7 +1,8 @@
+import { bookData } from '@/constants/bookData';
 import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  http.get('/hello', () => {
-    return HttpResponse.json('Hello World!');
+  http.get('/allData', () => {
+    return HttpResponse.json(bookData);
   }),
 ];
