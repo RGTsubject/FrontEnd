@@ -18,16 +18,15 @@ export const handlers = [
   }),
 
   http.delete('/book/:id', ({ params }) => {
-    const bookId = params.id as string;
-    const book = bookData.filter((b) => b.id === parseInt(bookId));
+    const bookId = parseInt(params.id as string);
 
-    if (book) {
-      return HttpResponse.json(book);
+    const bookIndex = bookData.findIndex((b) => b.id === bookId);
+
+    if (bookIndex > -1) {
+      bookData.splice(bookIndex, 1);
+      return HttpResponse.json(null, { status: 204 });
     } else {
-      return HttpResponse.json(
-        { error: 'Not Allowed Delete' },
-        { status: 404 }
-      );
+      return HttpResponse.json({ error: 'No data exists' }, { status: 404 });
     }
   }),
 ];

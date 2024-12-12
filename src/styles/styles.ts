@@ -56,13 +56,15 @@ export const HomeContainer = styled.div`
       padding: 0.5rem;
 
       &:hover {
-        transition: 0.3s transform;
-        transform: translateY(-10px);
         box-shadow: 0px 1px 3px 1px gray;
         border-radius: 0.3rem;
       }
     }
 
+    .bookCol {
+      display: flex;
+      flex-direction: column;
+    }
     .bookCoverRow {
       width: 100%;
       display: flex;
@@ -86,6 +88,12 @@ export const HomeContainer = styled.div`
     .bookPrice {
       font-family: 'GmarketSansLight';
       font-size: 0.7rem;
+    }
+
+    .deleteRow {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
     }
   }
 `;
