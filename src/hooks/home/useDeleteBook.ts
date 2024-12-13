@@ -2,12 +2,12 @@
 import { BookType } from '@/types/home';
 
 // libraries
-import axios from 'axios';
 import {
   QueryObserverResult,
   RefetchOptions,
   useMutation,
 } from '@tanstack/react-query';
+import { deleteData } from '@/pages/api/home';
 
 interface useDeleteBookType {
   id: number;
@@ -20,7 +20,7 @@ const useDeleteBook = ({ id, refetchBookAllInfo }: useDeleteBookType) => {
   return useMutation({
     mutationKey: ['deleteBook'],
     mutationFn: async () => {
-      const response = await axios.delete(`/book/${id}`);
+      const response = await deleteData(id);
 
       console.log(response);
     },

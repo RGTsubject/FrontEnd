@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const HomeContainer = styled.div`
   display: flex;
@@ -14,6 +14,22 @@ export const HomeContainer = styled.div`
     width: 100%;
     top: 5rem;
   }
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+
+  .inputContainer {
+    margin-top: 2rem;
+    padding: 9px;
+  }
+
   .title {
     font-family: 'GmarketSansBold';
     font-size: 1.2rem;
@@ -111,5 +127,60 @@ export const SearchInput = styled.input`
 
   &:focus-within {
     border: 2px solid #3f85f2;
+  }
+`;
+
+const showModal = keyframes`
+  0% {
+    opacity: 0;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const ModalContainer = styled.div`
+  width: 40vw;
+  height: 60vh;
+  background-color: white;
+  border-radius: 0.2rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 500;
+  animation: 0.5s ${showModal};
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal {
+    width: 100%;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modalHeader {
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0.2rem 0.2rem 0 0;
+    margin-top: 0.3rem;
+  }
+
+  .close {
+    margin-right: 0.4rem;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: black;
   }
 `;

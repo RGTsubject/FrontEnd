@@ -5,5 +5,4 @@ export interface BookType {
   salesQuantity: number;
   price: number;
   detail: string;
-  img: string;
 }
