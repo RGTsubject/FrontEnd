@@ -27,3 +27,16 @@ export const postBookData = (body: {
 }) => {
   return apiClient.post('/books', body);
 };
+
+export const putBookData = (
+  body: {
+    bookTitle: string;
+    author: string;
+    salesQuantity: number;
+    price: number;
+    detail: string;
+  },
+  id: number
+) => {
+  return apiClient.put(`/books/${id}`, body);
+};

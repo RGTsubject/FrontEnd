@@ -6,3 +6,11 @@ export interface BookType {
   price: number;
   detail: string;
 }
+
+export interface BookBooleanType {
+  bookTitle: boolean;
+  author: boolean;
+  salesQuantity: boolean;
+  price: boolean;
+  detail: boolean;
+}

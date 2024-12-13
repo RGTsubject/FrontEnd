@@ -78,6 +78,12 @@ export const IDConainer = styled.div`
       flex-direction: column;
       justify-content: space-between;
       margin-top: 1rem;
+
+      textarea {
+        font-family: 'GmarketSansLight';
+        width: 100%;
+        height: 20vh;
+      }
     }
 
     .bookDetail {
