@@ -22,9 +22,9 @@ import basicImg from '@/assets/img/BasicBookCover.jpg';
 // libraries
 
 // apis
-import { postData } from './api/home';
 import { sortingDatas } from '@/constants/imgSorting';
 import Modal from '@/components/Modal';
+import usePostData from '@/hooks/home/usePostData';
 
 const Home = () => {
   // 검색 단어
@@ -70,9 +70,13 @@ const Home = () => {
     refetchBookAllInfo,
   }); // 책 Delete
 
+  const { isSuccess: SucessPost, mutate: enrollBookData } = usePostData({
+    selectedBookInfo,
+  });
+
   useEffect(() => {
     refetchBookAllInfo();
-  }, [SucessDelete]);
+  }, [SucessDelete, SucessPost]);
 
   // 책 검색
   const inputSearchData = useCallback(
@@ -85,6 +89,7 @@ const Home = () => {
     [refetchBookAllInfo]
   );
 
+  // 검색 필터링
   const filteringBook = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.code === 'Enter') {
@@ -110,6 +115,7 @@ const Home = () => {
     deleteBookQuery();
   }
 
+  // 이미지 sort
   function sortingImg(bookTitle: string) {
     const filtering = sortingDatas.filter(
       (data) => data.bookTitle === bookTitle
@@ -127,9 +133,30 @@ const Home = () => {
     return <Image src={imgSrc} {...options} />;
   }
 
+  // modal hanlder
   function handleModal() {
     setIsOpen(!isOpen);
   }
+
+  // 데이터 입력
+  function inputData(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = e.target;
+    setSelectedBookInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function submitData() {
+    enrollBookData();
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    console.log(selectedBookInfo);
+  }, [selectedBookInfo]);
 
   return (
     <HomeContainer>
@@ -149,7 +176,38 @@ const Home = () => {
           <button onClick={() => handleModal()}>등록</button>
           {isOpen && (
             <Modal openModal={handleModal} modal={isOpen}>
-              <div className="inputContainer">모달</div>
+              <div className="inputContainer">
+                <span>책 제목</span>
+                <input
+                  name="bookTitle"
+                  className="input"
+                  onChange={(e) => inputData(e)}
+                />
+                <span>저자</span>
+                <input
+                  name="author"
+                  className="input"
+                  onChange={(e) => inputData(e)}
+                />
+                <span>판매 수량</span>
+                <input
+                  name="salesQuantity"
+                  className="input"
+                  onChange={(e) => inputData(e)}
+                />
+                <span>가격</span>
+                <input
+                  name="price"
+                  className="input"
+                  onChange={(e) => inputData(e)}
+                />
+                <span>책 소개</span>
+                <textarea name="detail" onChange={(e) => inputData(e)} />
+
+                <div style={{ textAlign: 'end' }}>
+                  <button onClick={() => submitData()}>완료</button>
+                </div>
+              </div>
             </Modal>
           )}
         </div>

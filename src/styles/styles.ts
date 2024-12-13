@@ -26,8 +26,43 @@ export const HomeContainer = styled.div`
   }
 
   .inputContainer {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     padding: 9px;
+    gap: 10px;
+
+    input {
+      width: 60%;
+      height: 20px;
+      outline: none;
+      border: none;
+      border-radius: 0.2rem;
+      box-shadow: 0px 1px 3px 1px gray;
+      border: 2px solid #ffffff;
+      margin-right: 0.5rem;
+      padding-left: 0.3rem;
+
+      &:focus-within {
+        border: 2px solid #3f85f2;
+      }
+    }
+
+    textarea {
+      width: 80%;
+      height: 20vh;
+      outline: none;
+      border: none;
+      border-radius: 0.2rem;
+      box-shadow: 0px 1px 3px 1px gray;
+      border: 2px solid #ffffff;
+      margin-right: 0.5rem;
+      padding-left: 0.3rem;
+
+      &:focus-within {
+        border: 2px solid #3f85f2;
+      }
+    }
   }
 
   .title {
@@ -142,7 +177,7 @@ const showModal = keyframes`
 
 export const ModalContainer = styled.div`
   width: 40vw;
-  height: 60vh;
+  height: 80vh;
   background-color: white;
   border-radius: 0.2rem;
   position: fixed;

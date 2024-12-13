@@ -17,3 +17,13 @@ export const postData = (formData: FormData) => {
 export const deleteData = (id: number) => {
   return apiClient.delete(`/books/${id}`);
 };
+
+export const postBookData = (body: {
+  bookTitle: string;
+  author: string;
+  salesQuantity: number;
+  price: number;
+  detail: string;
+}) => {
+  return apiClient.post('/books', body);
+};
