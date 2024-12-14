@@ -7,6 +7,7 @@ import { IDConainer } from '@/styles/id/styles';
 
 // hooks
 import useGetBookSpecificData from '@/hooks/home/useGetBookSpecificData';
+import usePutBookData from '@/hooks/home/usePutBookData';
 
 // constants
 import { sortingDatas } from '@/constants/imgSorting';
@@ -16,7 +17,6 @@ import basicImg from '@/assets/img/BasicBookCover.jpg';
 
 // types
 import { BookBooleanType, BookType } from '@/types/home';
-import usePutBookData from '@/hooks/home/usePutBookData';
 
 const detailPage = () => {
   const { id } = useParams();
