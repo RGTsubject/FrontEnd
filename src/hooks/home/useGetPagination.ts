@@ -1,7 +1,12 @@
-import { getPagination } from '@/pages/api/home';
-import { BookType } from '@/types/home';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { SetStateAction } from 'react';
+// apis
+import { getPagination } from '@/pages/api/home';
+
+// types
+import { BookType } from '@/types/home';
+
+// libraries
+import { useMutation } from '@tanstack/react-query';
 
 interface useGetPaginationType {
   page: number;

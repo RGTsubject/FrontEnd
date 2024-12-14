@@ -1,7 +1,8 @@
-import { ModalContainer } from '@/styles/styles';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { createPortal } from 'react-dom';
+
+// styles
+import { ModalContainer } from '@/styles/styles';
 
 interface ModalType {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface ModalType {
   openModal: () => void;
 }
 
-const Modal = ({ children, modal, openModal }: ModalType) => {
+const Modal = ({ children, openModal }: ModalType) => {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {

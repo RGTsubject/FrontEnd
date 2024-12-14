@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // styles
@@ -55,18 +55,13 @@ const Home = () => {
     detail: '',
   });
 
-  // imgSrc 상태 정의
-  const [imgSrc, setImgSrc] = useState<StaticImageData | string>(basicImg);
-
   // 책 아이디
   const [bookId, setBookId] = useState<number>(0);
 
   // modal boolean
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { data: allData, refetch: refetchBookAllInfo } = useGetBookAllData({
-    setAllBookInfo,
-  }); // 모든 데이터 GET
+  const { data: allData } = useGetBookAllData(); // 모든 데이터 GET
 
   const { mutate: bookPagination } = useGetPagination({ page, setAllBookInfo }); // 페이지네이션
 
@@ -111,7 +106,7 @@ const Home = () => {
         }
       }
     },
-    [searchData, allBookInfo]
+    [allData, searchData, allBookInfo]
   );
 
   // 삭제
@@ -130,12 +125,12 @@ const Home = () => {
 
     const options = {
       className: 'bookCover',
-      alt: '책 이미지',
+
       width: 150,
       height: 270,
     };
 
-    return <Image src={imgSrc} {...options} />;
+    return <Image src={imgSrc} {...options} alt="책 이미지" />;
   }
 
   // modal hanlder

@@ -1,7 +1,11 @@
+// apis
 import { getSpecificData } from '@/pages/api/home';
+
+// types
 import { BookType } from '@/types/home';
+
+// libraries
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
 interface useGetBookSpecificDataType {
   id: string | string[] | undefined;
