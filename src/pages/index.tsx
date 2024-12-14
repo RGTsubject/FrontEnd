@@ -29,10 +29,9 @@ import useGetPagination from '@/hooks/home/useGetPagination';
 
 const Home = () => {
   // 페이지
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState(1); // 페이지 카운트 초기화
   // 검색 단어
   const [searchData, setSearchData] = useState<string>('');
-
   // 전체 데이터
   const [allBookInfo, setAllBookInfo] = useState<BookType[]>([
     {
@@ -44,7 +43,6 @@ const Home = () => {
       detail: '',
     },
   ]);
-
   // 선택된 데이터
   const [selectedBookInfo, setSelectedBookInfo] = useState<BookType>({
     id: 0,
@@ -54,29 +52,20 @@ const Home = () => {
     price: 0,
     detail: '',
   });
-
   // 책 아이디
   const [bookId, setBookId] = useState<number>(0);
-
   // modal boolean
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { data: allData } = useGetBookAllData(); // 모든 데이터 GET
-
   const { mutate: bookPagination } = useGetPagination({ page, setAllBookInfo }); // 페이지네이션
-
-  const { mutate: deleteBookQuery, isSuccess: SucessDelete } = useDeleteBook({
+  const { mutate: deleteBookQuery } = useDeleteBook({
     id: bookId,
     bookPagination,
   }); // 책 Delete
-
-  const { isSuccess: SuccessPost, mutate: enrollBookData } = usePostData({
+  const { mutate: enrollBookData } = usePostData({
     selectedBookInfo,
-  });
-
-  useEffect(() => {
-    bookPagination();
-  }, [SucessDelete, SuccessPost]);
+  }); // 책 등록
 
   // 책 검색
   const inputSearchData = useCallback(
@@ -94,7 +83,6 @@ const Home = () => {
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.code === 'Enter') {
         const searchTerm = searchData.toLowerCase();
-
         const filteredBooks = allData?.filter(
           (book) =>
             book.bookTitle.toLowerCase().includes(searchTerm) ||
@@ -106,7 +94,7 @@ const Home = () => {
         }
       }
     },
-    [allData, searchData, allBookInfo]
+    [allData, searchData]
   );
 
   // 삭제
@@ -134,20 +122,21 @@ const Home = () => {
   }
 
   // modal hanlder
-  function handleModal() {
+  const handleModal = useCallback(() => {
     setIsOpen(!isOpen);
-  }
+  }, [isOpen]);
 
   // 데이터 입력
-  function inputData(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = e.target;
-    setSelectedBookInfo((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
+  const inputData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setSelectedBookInfo((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   // post data
   function submitData() {
@@ -162,19 +151,18 @@ const Home = () => {
     if (id === 'left') {
       if (page > 0) {
         setPage((prev) => prev - 1);
-        bookPagination();
       }
     } else {
       if (allData && page < allData.length / 10) {
         setPage((prev) => prev + 1);
-        bookPagination();
       }
     }
   }
 
+  // 페이지
   useEffect(() => {
-    console.log(page);
-  }, [selectedBookInfo, page]);
+    bookPagination();
+  }, [page]);
 
   return (
     <HomeContainer>
@@ -233,7 +221,11 @@ const Home = () => {
           {allBookInfo &&
             allBookInfo.map((info, i) => {
               return (
-                <div className="bookShow" key={i} style={{ cursor: 'pointer' }}>
+                <div
+                  className="bookShow"
+                  key={info.id}
+                  style={{ cursor: 'pointer' }}
+                >
                   <Link href={`/${info.id}`} passHref>
                     <div className="bookCol">
                       <div className="bookCoverRow">
