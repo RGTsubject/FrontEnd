@@ -3,6 +3,7 @@ import { BookType } from '@/types/home';
 
 // libraries
 import {
+  MutateOptions,
   QueryObserverResult,
   RefetchOptions,
   useMutation,
@@ -11,12 +12,13 @@ import { deleteData } from '@/pages/api/home';
 
 interface useDeleteBookType {
   id: number;
-  refetchBookAllInfo: (
-    options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<BookType[], Error>>;
+  bookPagination: (
+    variables: void,
+    options?: MutateOptions<BookType[], Error, void, unknown> | undefined
+  ) => void;
 }
 
-const useDeleteBook = ({ id, refetchBookAllInfo }: useDeleteBookType) => {
+const useDeleteBook = ({ id, bookPagination }: useDeleteBookType) => {
   return useMutation({
     mutationKey: ['deleteBook'],
     mutationFn: async () => {
@@ -26,7 +28,7 @@ const useDeleteBook = ({ id, refetchBookAllInfo }: useDeleteBookType) => {
     },
 
     onSuccess: () => {
-      refetchBookAllInfo;
+      bookPagination;
     },
   });
 };

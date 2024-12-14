@@ -25,8 +25,11 @@ import basicImg from '@/assets/img/BasicBookCover.jpg';
 import { sortingDatas } from '@/constants/imgSorting';
 import Modal from '@/components/Modal';
 import usePostData from '@/hooks/home/usePostData';
+import useGetPagination from '@/hooks/home/useGetPagination';
 
 const Home = () => {
+  // 페이지
+  const [page, setPage] = useState<number>(1);
   // 검색 단어
   const [searchData, setSearchData] = useState<string>('');
 
@@ -61,32 +64,34 @@ const Home = () => {
   // modal boolean
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { refetch: refetchBookAllInfo } = useGetBookAllData({
+  const { data: allData, refetch: refetchBookAllInfo } = useGetBookAllData({
     setAllBookInfo,
   }); // 모든 데이터 GET
 
+  const { mutate: bookPagination } = useGetPagination({ page, setAllBookInfo }); // 페이지네이션
+
   const { mutate: deleteBookQuery, isSuccess: SucessDelete } = useDeleteBook({
     id: bookId,
-    refetchBookAllInfo,
+    bookPagination,
   }); // 책 Delete
 
-  const { isSuccess: SucessPost, mutate: enrollBookData } = usePostData({
+  const { isSuccess: SuccessPost, mutate: enrollBookData } = usePostData({
     selectedBookInfo,
   });
 
   useEffect(() => {
-    refetchBookAllInfo();
-  }, [SucessDelete, SucessPost]);
+    bookPagination();
+  }, [SucessDelete, SuccessPost]);
 
   // 책 검색
   const inputSearchData = useCallback(
     (word: string) => {
       setSearchData(word);
       if (word.length === 0) {
-        refetchBookAllInfo();
+        bookPagination();
       }
     },
-    [refetchBookAllInfo]
+    [bookPagination]
   );
 
   // 검색 필터링
@@ -95,13 +100,13 @@ const Home = () => {
       if (e.code === 'Enter') {
         const searchTerm = searchData.toLowerCase();
 
-        const filteredBooks = allBookInfo.filter(
+        const filteredBooks = allData?.filter(
           (book) =>
             book.bookTitle.toLowerCase().includes(searchTerm) ||
             book.author.toLowerCase().includes(searchTerm)
         );
 
-        if (filteredBooks.length !== allBookInfo.length) {
+        if (filteredBooks && filteredBooks?.length !== allBookInfo.length) {
           setAllBookInfo(filteredBooks);
         }
       }
@@ -149,14 +154,32 @@ const Home = () => {
     }));
   }
 
+  // post data
   function submitData() {
     enrollBookData();
     setIsOpen(false);
   }
 
+  // 페이지 이동
+  function handlePage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const { id } = e.currentTarget;
+
+    if (id === 'left') {
+      if (page > 0) {
+        setPage((prev) => prev - 1);
+        bookPagination();
+      }
+    } else {
+      if (allData && page < allData.length / 10) {
+        setPage((prev) => prev + 1);
+        bookPagination();
+      }
+    }
+  }
+
   useEffect(() => {
-    console.log(selectedBookInfo);
-  }, [selectedBookInfo]);
+    console.log(page);
+  }, [selectedBookInfo, page]);
 
   return (
     <HomeContainer>
@@ -213,7 +236,7 @@ const Home = () => {
         </div>
         <main>
           {allBookInfo &&
-            allBookInfo?.map((info, i) => {
+            allBookInfo.map((info, i) => {
               return (
                 <div className="bookShow" key={i} style={{ cursor: 'pointer' }}>
                   <Link href={`/${info.id}`} passHref>
@@ -239,6 +262,18 @@ const Home = () => {
               );
             })}
         </main>
+        <div>
+          <button className="leftBtn" id="left" onClick={(e) => handlePage(e)}>
+            &lt;
+          </button>
+          <button
+            className="rightBtn"
+            id="right"
+            onClick={(e) => handlePage(e)}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
     </HomeContainer>
   );

@@ -40,3 +40,7 @@ export const putBookData = (
 ) => {
   return apiClient.put(`/books/${id}`, body);
 };
+
+export const getPagination = (page: number, limit: number) => {
+  return apiClient.get(`/paging?page=${page}&limit=${limit}`);
+};

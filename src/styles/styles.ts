@@ -12,7 +12,7 @@ export const HomeContainer = styled.div`
     align-items: center;
     position: relative;
     width: 100%;
-    top: 5rem;
+    top: 1rem;
   }
 
   .background {
@@ -77,12 +77,11 @@ export const HomeContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
   }
 
   main {
     width: 70%;
-    height: 500px;
+    height: 538px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -100,6 +99,7 @@ export const HomeContainer = styled.div`
 
     .bookShow {
       width: 180px;
+      height: 350px;
       display: flex;
       flex-direction: column;
       margin: 0.8rem;
@@ -217,5 +217,19 @@ export const ModalContainer = styled.div`
     height: 20px;
     cursor: pointer;
     color: black;
+  }
+
+  .leftBtn {
+    font-family: 'GmarketSansMedium';
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .rightBtn {
+    font-family: 'GmarketSansMedium';
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
   }
 `;
