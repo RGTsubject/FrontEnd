@@ -219,7 +219,7 @@ const Home = () => {
         </div>
         <main>
           {allBookInfo &&
-            allBookInfo.map((info, i) => {
+            allBookInfo.map((info) => {
               return (
                 <div
                   className="bookShow"
