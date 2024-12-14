@@ -2,12 +2,7 @@
 import { BookType } from '@/types/home';
 
 // libraries
-import {
-  MutateOptions,
-  QueryObserverResult,
-  RefetchOptions,
-  useMutation,
-} from '@tanstack/react-query';
+import { MutateOptions, useMutation } from '@tanstack/react-query';
 import { deleteData } from '@/pages/api/home';
 
 interface useDeleteBookType {

@@ -1,14 +1,13 @@
+// apis
 import { getAllData } from '@/pages/api/home';
+
+// types
 import { BookType } from '@/types/home';
+
+// libraries
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { SetStateAction } from 'react';
 
-interface useGetBookAllDataType {
-  setAllBookInfo: React.Dispatch<SetStateAction<BookType[]>>;
-}
-
-const useGetBookAllData = ({ setAllBookInfo }: useGetBookAllDataType) => {
+const useGetBookAllData = () => {
   return useQuery<BookType[]>({
     queryKey: ['getAllBook'],
     queryFn: async () => {

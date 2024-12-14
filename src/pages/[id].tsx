@@ -64,12 +64,12 @@ const detailPage = () => {
 
     const options = {
       className: 'bookCover',
-      alt: '책 이미지',
+
       width: 400,
       height: 360,
     };
 
-    return <Image src={imgSrc} {...options} />;
+    return <Image src={imgSrc} {...options} alt="책 이미지" />;
   }
 
   // DOM => Input 변환
@@ -109,10 +109,6 @@ const detailPage = () => {
       }));
     }
   }, [SuccessSpecificData]);
-
-  useEffect(() => {
-    console.log('modifyData: ', modifyData);
-  }, [modifyData]);
 
   return (
     <IDConainer>
